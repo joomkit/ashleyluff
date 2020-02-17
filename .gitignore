@@ -6,6 +6,7 @@
 /.env
 /.idea
 /vendor
+/sql
 .DS_Store
 config/project.yaml
 
