@@ -1,0 +1,6 @@
+{
+  "AutoFormat.RemoveEmpty.RemoveNbsp": true,
+  "Attr.AllowedFrameTargets": ["_blank"],
+  "HTML.AllowedComments": ["pagebreak"],
+  "HTML.AllowedElements" : ["div","p", "h1", "h2", "pre", "span"]
+}

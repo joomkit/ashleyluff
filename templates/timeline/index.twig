@@ -1,0 +1,170 @@
+{% extends "_layouts/site" %}
+
+{% block content %}
+
+
+    <section>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title">
+                        <div class="row">
+                            <div class=" col-sm-6">
+                                {% set image = entry.image[0] ?? null %}
+                                {% if image %}
+                                    {% set thumb = {
+                                        mode: 'fit',
+                                        width: 500,
+                                        quality: 85
+                                    } %}
+                                {% endif %}
+                                <img class="img-fluid mb-3" alt="{{ entry.title }}" title="{{ entry.title }}" src="{{ image.getUrl(thumb) }}">
+
+
+                            </div>
+                            <div class=" col-sm-6 bg-light">
+                                {% set image = entry.image[0] ?? null %}
+                                {% if image %}
+                                    {% set thumb = {
+                                        mode: 'fit',
+                                        width: 500,
+                                        quality: 85
+                                    } %}
+                                {% endif %}
+                                <h1>{{ entry.title }}</h1>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Content -->
+
+
+    {#<ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">#}
+        {#<li class="nav-item">#}
+            {#<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>#}
+        {#</li>#}
+        {#<li class="nav-item">#}
+            {#<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>#}
+        {#</li>#}
+
+    {#</ul>#}
+    {#<div class="tab-content" id="myTabContent">#}
+        {#<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">#}
+            {#<!-- timeline -->#}
+
+
+        {#</div>#}
+        {#<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>#}
+
+    {#</div>#}
+
+
+    <section class="page mt-5">
+
+        <div class="container">
+            <div class="row ">
+                <div class="h-100 col-sm-6 ">
+                    {% set image = entry.image[0] ?? null %}
+                    {% if image %}
+                        {% set thumb = {
+                        mode: 'fit',
+                        width: 500,
+                        quality: 85
+                        } %}
+                    {% endif %}
+                    <img class="img-fluid mb-3" alt="{{ entry.title }}" title="{{ entry.title }}" src="{{ image.getUrl(thumb) }}">
+                    {{ entry.introText }}
+
+                    {% for block in entry.contentBlock.all() %}
+
+                        {% set lazyImage = false %}
+                        {% set blockPrefix = "" %}
+
+                        {% include ('pages/_partials/_' ~ blockPrefix ~ 'block_' ~ block.type.handle) %}
+                        {% if block.type.handle == "image" %}
+                            {% set lazyImage = true %}
+                        {% endif %}
+                    {% endfor %}
+               </div>
+                <div class="h-100 col-sm-6 d-flex justify-center align-content-center">
+
+                    <h1>Ashley Luff</h1>
+
+
+                </div>
+                <div class="hide h-100 col-7">
+                    <h4 class="text-center">Exhibitions</h4>
+                    <div class="timeline">
+
+                        {%  set reverse = entry.timelineOrder %}
+                        {% set entries = craft.entries({
+                        section:'timeline',
+
+                        }).limit(null).orderBy('lft ' ~ reverse)
+                        %}
+
+
+                        {% for entry in entries.all()  %}
+
+                            {% set image = entry.eventImage[0] ?? null %}
+                            {% if image %}
+                                {% set thumb = {
+                                mode: 'fit',
+                                width: 500,
+                                quality: 85
+                                } %}
+                            {% endif %}
+
+
+                            {% if loop.index is divisible by(2) %}
+
+
+                                <div class="timeline-item-right">
+
+                                    {% if image %}
+                                        <div class="col-md-6 text-right p-4">
+
+                                            <img class="img-fluid" alt="{{ entry.title }}" title="{{ entry.title }}" src="{{ image.getUrl(thumb) }}">
+                                        </div>
+                                    {% endif %}
+                                    <div class="col-md-6 {% if image is null %}offset-md-6{% endif %} text-left p-4 mr-0">
+                                        <h3>{{ entry.year }} </h3>
+                                        <h5>{{ entry.title }}</h5>
+                                        <h6>Exhibit</h6>
+
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="timeline-item-left">
+                                    <div class="col-md-6 text-right p-4 mr-0">
+                                        <h3>{{ entry.year }}</h3>
+                                        <h5>{{ entry.title }}</h5>
+                                        <h6>Exhibit</h6>
+                                    </div>
+                                    {% if image %}
+                                        <div class="col-md-6 text-left p-4">
+                                            <img class="img-fluid" alt="{{ entry.title }}" title="{{ entry.title }}"
+                                                 src="{{ image.getUrl(thumb) }}">
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+{% endblock content %}

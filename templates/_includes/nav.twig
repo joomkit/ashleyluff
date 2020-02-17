@@ -1,0 +1,41 @@
+<!-- Start Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-default navbar-custom navbar-light">
+    <div class="container">
+        <a class="navbar-brand logo" href="{{ baseUrl}}">Ashley Luff <span class="art">Art</span></a>
+
+        <div class="navbar-header">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="mdi mdi-menu"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+
+            {% set entries = craft.entries.section('menu') %}
+
+            <ul class="nav navbar-nav ml-auto">
+                {% nav entry in entries.all()  %}
+
+                {% if entry.menuItem.one()|length %}
+                    {% set navlink = entry.menuItem.one().url %}
+                {% else %}
+                    {% set navlink = entry.customLink %}
+                {% endif %}
+
+                        <li class="nav-item"><a class="nav-link"href="{{ navlink }}">{{ entry.title }}</a></li>
+                            {% ifchildren %}
+                            <ul>
+                                {% children %}
+                            </ul>
+                            {% endifchildren %}
+                        </li>
+
+                {% endnav %}
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+<!-- End Navbar -->
