@@ -69,15 +69,32 @@ body.timelineIndex{
 a.scroll-down{
     background:rgba(255,255,255, 0.3);
 }
-.home-overlay{
-    position:absolute;
-    top:30%;
-    left: 10%;
-    padding: 10px;
-    background:rgba(255,255,255, 0.7);
-    color:#000000;
-    width:290px;
-    height:135px;
+
+@media (min-width: 0px){
+    .home-overlay{
+        position: absolute;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.7);
+        color: #000000;
+        width: 290px;
+        height: 135px;
+        top:30%;
+        left:50%;
+        transform:translate(-50%, -50%);
+    }
+}
+@media (min-width: 768px){
+    .home-overlay {
+        position: absolute;
+        top: 30%;
+        left: 10%;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.7);
+        color: #000000;
+        width: 290px;
+        height: 135px;
+        transform: none;
+    }
 }
 .catDesc{
     color:#333;
