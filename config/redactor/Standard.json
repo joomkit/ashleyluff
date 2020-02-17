@@ -1,0 +1,8 @@
+{
+  "buttons": ["html", "formatting", "bold", "italic", "unorderedlist", "orderedlist", "link", "image", "video"],
+  "plugins": ["fullscreen", "video"],
+  "linkNewTab": true,
+  "toolbarFixed": true,
+  "replaceDivs" : false,
+  "allowedTags" : ["div","p", "h1", "h2", "pre"]
+}

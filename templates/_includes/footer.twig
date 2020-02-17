@@ -1,0 +1,47 @@
+<!-- FOOTER -->
+<footer class="footer fixed-bottoixed">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <div class="logo center-block"><img src="images/logo.png" alt="" class=""></div>
+
+                    <ul class="hide list-inline social-circle margin-t-30">
+                        <li class="list-inline-item"><a href=""> <i class="mdi mdi-facebook"></i> </a></li>
+                        <li class="list-inline-item"><a href=""> <i class="mdi mdi-twitter"></i> </a></li>
+                        <li class="list-inline-item"><a href=""> <i class="mdi mdi-google-plus"></i> </a></li>
+                        <li class="list-inline-item"><a href=""> <i class="mdi mdi-apple"></i> </a></li>
+                        <li class="list-inline-item"><a href=""> <i class="mdi mdi-instagram"></i> </a></li>
+                    </ul>
+
+                    <p class="text-muted m-b-0 copyright-txt">
+                        {% set startYear = 2010 %}
+                        {% set currentYear = 'now' | date('Y') %}
+
+                            {% set copyrightYears = startYear ~ ' - ' ~ currentYear %}
+
+
+                    &copy; {{ copyrightYears }} Ashley Luff. All Rights Reserved
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+    </div>
+</footer>
+
+<!-- END FOOTER -->
+
+<!-- JAVASCRIPTS -->
+<script src="{{ baseUrl }}/js/jquery.min.js"></script>
+<script src="{{ baseUrl }}/js/bootstrap.bundle.min.js"></script>
+<!-- isotope filter plugin -->
+<script src="{{ baseUrl }}/js/isotope.pkgd.min.js"></script>
+<script src="{{ baseUrl }}/js/portfolio-filter.js"></script>
+<script src="{{ baseUrl }}/js/app.js"></script>
+<script src="{{ baseUrl }}/js/lightgallery-all.js"></script>
+</body>
+</html>

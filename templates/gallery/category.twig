@@ -1,0 +1,134 @@
+{% extends "_layouts/site.twig" %}
+{%  set bodyClass = 'galleryindex' %}
+{% import '_macros' as macros %}
+{% block content %}
+    {% set galleryItems = craft.entries({
+        section:'gallery',
+        with:['image']
+    }).ids()
+    %}
+
+    {% set categories = craft.categories.group('gallery').relatedTo(galleryItems) %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title">
+                        <div class="row">
+                            <div class="col-lg-9 mb-5">
+
+                                <h1>{{ category.title }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    <section class="section">
+
+        <div class="container">
+            <div class="row">
+                <!-- SECTION FILTER
+                ================================================== -->
+
+{#                {% set entries = craft.entries({#}
+{#                    section:'gallery',#}
+{#                    with:['image']#}
+{#                }).all()#}
+{#                %}#}
+{#                {% set categoriesGroup = craft.categories.group('gallery').relatedTo(entries) %}#}
+
+{#                #}{# Fetch the categories #}
+{#                {% set category = categoriesGroup.one() %}#}
+
+
+
+
+                <div class="col-xs-12 col-lg-8 port portfolio-masonry m-b-30">
+
+                    <div class="portfolioContainer row"  id="lightgal">
+                        {% set entries = craft.entries({
+                            section:'gallery',
+                            with:['image'],
+                            relatedTo:{ targetElement: category }
+                        }).all()
+                        %}
+
+                        {#{% set entries = craft.entries()#}
+                        {#.section('gallery')#}
+                        {#.with(['image']).featureContent('1')#}
+                        {#.all() %}#}
+
+                        {% for entry in entries %}
+                            {% set image = entry.image[0] ?? null %}
+                            {% if image %}
+                                {% set thumb = {
+                                    mode: 'crop',
+                                    width: 350,
+                                    height:350,
+                                    quality: 85
+                                } %}
+
+                                {% set tags = entry.MediumUsed %}
+                                {#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
+                                <div class="col-lg-6 ">
+                                {#<a href="work-detail.html">#}
+                                <div class="portfolio-box">
+                                <div class="portfolio-box-img" data-src="{{ image.getUrl() }}">
+                                {# Get the eager-loaded asset, if there is one #}
+
+                                {#<img src="{{ image.url }}" class="img-fluid" alt="member-image">#}
+                                <img class="img-fluid" alt="{{ entry.title }} - {% for tag in tags.all() %}{{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm" title="{{ entry.title }}"
+                                     src="{{ image.getUrl(thumb) }}">
+
+                            {% endif %}
+                            </div>
+                            <div class="portfolio-box-detail">
+                                <h4>{{ entry.title }}</h4>
+                                <div class="d-flex align-items-center">
+
+                                    <p class="align-self-center mdi mdi-24px mdi-palette"></p>
+                                    {% for tag in tags.all() %}
+                                        <p class="px-1">{{ tag }}</p>
+                                    {% endfor %}
+                                    <p class="hide ml-3 justify-content-end mdi mdi-24px mdi-image-multiple mr-1"></p>
+                                    <p class="hide justify-content-end"> w: {{ entry.width }}cm  h: {{ entry.height }}cm</p>
+                                </div>
+
+
+                            </div>
+                            </div>
+                            {#</a>#}
+                            </div>
+                        {% endfor %}
+
+                    </div><!-- end portfoliocontainer-->
+
+
+                </div>
+                <div class="col-lg-3 pl-sm-0 pl-md-5 px-0 offset-1">
+                    <div class="galleryNav mt-3 sticky-top">
+                        <h3>Galleries</h3>
+                        <ul class="list-unstyled">
+
+                            {% for category in categories.all() %}
+                                <li>
+                                    <a {{ macros.isActive(category.slug) }} href="{{ baseUrl }}/{{ category.uri }}" >{{ category.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End row -->
+
+
+        </div> <!-- end container -->
+
+
+    </section>
+
+{% endblock %}

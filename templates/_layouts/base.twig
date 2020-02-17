@@ -1,0 +1,53 @@
+{% set baseUrl = craft.app.config.general.baseUrl %}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% hook "seo" %}
+
+        <link rel="shortcut icon" href="{{ baseUrl }}/images/favicon.ico">
+
+        <!-- Google Font -->
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Raleway|Open+Sans&display=swap');
+        </style>
+        <!-- Bootstrap Css-->
+        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/bootstrap.min.css" />
+
+        <!-- Materialdesign icon Css-->
+        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/materialdesignicons.min.css" />
+        <!-- Pe 7 icon Css-->
+        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/pe-icon-7-stroke.css" />
+
+        <!-- Custom Css -->
+        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/style.css" />
+
+
+        <!-- timeline Css -->
+        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/timeline.css" />
+
+        <link type="text/css" rel="stylesheet" href="{{ baseUrl }}/css/lightgallery.css" />
+
+
+    </head>
+{% endblock %}
+
+{% if bodyClass is not defined %}
+    {% set bodyClass = entry is defined ? entry.type : craft.request.firstSegment %}
+{% endif %}
+<body class="{{ bodyClass }}">
+{% include '_includes/nav.twig' %}
+{% block body %}
+
+
+{% endblock %}
+
+{% block foot %}
+    {% include '_includes/footer.twig' %}
+
+{% endblock %}
+
+</body>
+</html>
