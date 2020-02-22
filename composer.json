@@ -1,5 +1,6 @@
 {
   "require": {
+    "aelvan/imager": "v2.4.0",
     "billythekid/recaptchaguest": "1.0.3",
     "by/guest-entries-notification": "1.0.0",
     "craftcms/cms": "3.4.7.1",

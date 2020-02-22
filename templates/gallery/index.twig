@@ -14,7 +14,7 @@
             <div class="col-lg-12">
                 <div class="page-title">
                     <div class="row">
-                        <div class="col-lg-9">
+                        <div class="col-lg-12 text-center mb-5">
                             <h1>Gallery</h1>
                         </div>
                     </div>
@@ -56,56 +56,68 @@
                 <div class="col-sm-12 ">
                     {% for category in categories.all() %}
                     {% set gallery = craft.entries.relatedTo(category) %}
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>{{ category.title }}</h3>
-                            <p>{{ category.categoryDescription }}</p>
-                        </div>
-                    </div>
+                    {% set detailPic = craft.entries.relatedTo(category).featureContent(true).limit(1) %}
+
 
                     <div class="row">
-                        <div class="col-sm-8">
-                            {% for entry in gallery.all() %}
+                        <div class="col-xs-12 col-md-12 col-lg-7">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h3 class="mb-1">{{ category.title }}</h3>
+                                    <p>{{ category.categoryDescription }}</p>
+                                </div>
+                            </div>
 
-                                {% set tags = entry.MediumUsed %}
+                            {% for entry in detailPic.all() %}
 
-                                {% if  entry.featureContent == 1 %}
-                                    {{ entry.image.one().getUrl('detailLarge') }}
-                                    {% set image = entry.image[0] ?? null %}
+                            {% if entry.sepiaFilter == '1' %}
 
-{#                                        {% set thumb = {#}
-{#                                            mode: 'crop',#}
-{#                                            width: 750,#}
-{#                                           height: ,#}
-{#                                            quality: 85#}
-{#                                        } %}#}
+                            {% set sepiaEffect = "modulate: [100, 20, 100]" |raw %}
+                                {% else %}
+                            {% set sepiaEffect = "" %}
+                            {% endif %}
+
+                                {% set maxWidth = entry.maxWidth ?? "350" %}
+
+                                    {% set tags = entry.MediumUsed %}
+
+                                    {% if  entry.featureContent == 1 %}
+
+                                        {% set image = entry.detailedCrop[0] ?? null %}
+                                        {% set transformedImage = craft.imager.transformImage(image,
+                                            {
+                                                mode:'crop',
+                                                width:maxWidth,
+                                              position: image.getFocalPoint(),
+
+                                            }
+                                            ) %}
 
 
-                                        <img class="img-fluid"  src="{{ image.getUrl({width: 200, height: 200}) }}" >
 
+{#                                            {% set thumb = {#}
+{#                                                mode: 'crop',#}
+{#                                                width: 450,#}
+{#                                               height: 0,#}
+{#                                                quality: 85#}
+{#                                            } %}#}
+{#                                        { width: 600, height: 600, position: asset.getFocalPoint() }#}
+                                        <div class="d-flex justify-content-center">
+                                        <img class="img-fluid mb-3"  src="{{ transformedImage.url }}">
+                                        </div>
+{#                                            <img class="img-fluid"  src="{{ image.getUrl('detailLarge') }}" >#}
+                                    {% endif %}
 
-
-
-                                {% endif %}
                             {% endfor %}
+
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-xs-12 col-md-12 col-lg-5">
                             <div class="row portfolioContainer  m-b-30 ">
 
                             {% for entry in gallery.all() %}
 
                                 {% set tags = entry.MediumUsed %}
                                 {% set image = entry.image[0] ?? null %}
-                                {% if  entry.featureContent == 1 %}
-
-
-
-                                {% endif %}
-
-
-
-
-
                                 {% if image %}
                                     {% set thumb = {
                                         mode: 'crop',
@@ -116,15 +128,17 @@
 
                                     {% set tags = entry.MediumUsed %}
                                     {#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
-                                    <div class="col-lg-6 natural ">
+                                    <div class="col-md-6 natural ">
                                     {#<a href="work-detail.html">#}
-                                    <div class="portfolio-box">
+                                    <div class="portfolio-box mt-0 mb-4">
                                     <div class="portfolio-box-img" data-src="{{ image.getUrl() }}">
                                     {# Get the eager-loaded asset, if there is one #}
 
                                     {#<img src="{{ image.url }}" class="img-fluid" alt="member-image">#}
-                                    <img class="img-fluid" alt="{{ entry.title }} - {% for tag in tags.all() %}{{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm" title="{{ entry.title }}"
-                                         src="{{ image.getUrl(thumb) }}">
+{#                                    <img class="img-fluid" alt="{{ entry.title }} - {% for tag in tags.all() %}{{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm" title="{{ entry.title }}"#}
+{#                                         src="{{ image.getUrl(thumb) }}">#}
+                                        <img class="img-fluid " src="{{ image.getUrl() }}" width="{{ image.getWidth() }}" height="{{ image.getHeight() }}">
+
                                     </div>
                                         <div class="portfolio-box-detail">
                                             <h4>{{ entry.title }}</h4>
@@ -172,107 +186,6 @@
 
         </div> <!-- end container -->
     </section>
-<section class="section hide">
 
-    <div class="container">
-        <div class="row">
-        <!-- SECTION FILTER
-        ================================================== -->
-
-        {% set entries = craft.entries({
-            section:'gallery',
-            with:['image']
-        }).all()
-        %}
-        {% set categoriesGroup = craft.categories.group('gallery').relatedTo(entries) %}
-
-        {# Fetch the categories #}
-        {% set category = categoriesGroup.one() %}
-
-
-
-
-        <div class="col-xs-12 col-sm-9 port portfolio-masonry m-b-30">
-            <div class="portfolioContainer row"  id="lightgal">
-                {% set entries = craft.entries({
-                    section:'gallery',
-                    with:['image']
-                }).all()
-                %}
-
-                {#{% set entries = craft.entries()#}
-                {#.section('gallery')#}
-                {#.with(['image']).featureContent('1')#}
-                {#.all() %}#}
-
-                {% for entry in entries %}
-                    {% set image = entry.image[0] ?? null %}
-                    {% if image %}
-                        {% set thumb = {
-                            mode: 'crop',
-                            width: 350,
-                            height:350,
-                            quality: 85
-                        } %}
-
-                        {% set tags = entry.MediumUsed %}
-{#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
-                        <div class="col-lg-4 natural ">
-                        {#<a href="work-detail.html">#}
-                        <div class="portfolio-box">
-                        <div class="portfolio-box-img" data-src="{{ image.getUrl() }}">
-                        {# Get the eager-loaded asset, if there is one #}
-
-                        {#<img src="{{ image.url }}" class="img-fluid" alt="member-image">#}
-                        <img class="img-fluid" alt="{{ entry.title }} - {% for tag in tags.all() %}{{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm" title="{{ entry.title }}"
-                             src="{{ image.getUrl(thumb) }}">
-
-                    {% endif %}
-                    </div>
-                    <div class="portfolio-box-detail">
-                        <h4>{{ entry.title }}</h4>
-                        <div class="d-flex align-items-center">
-
-                            <p class="align-self-center mdi mdi-24px mdi-palette"></p>
-                            {% for tag in tags.all() %}
-                                <p class="px-1">{{ tag }}</p>
-                            {% endfor %}
-                            <p class="hide ml-3 justify-content-end mdi mdi-24px mdi-image-multiple mr-1"></p>
-                            <p class="hide justify-content-end"> w: {{ entry.width }}cm  h: {{ entry.height }}cm</p>
-                        </div>
-
-
-                    </div>
-                    </div>
-                    {#</a>#}
-                    </div>
-                {% endfor %}
-
-            </div><!-- end portfoliocontainer-->
-
-
-        </div>
-        <div class="col-xs-12 col-sm-3 ">
-            <div class="galleryNav mt-3">
-                <h3>Galleries</h3>
-                <ul class="list-unstyled">
-
-                    {% for category in categories.all() %}
-                        <li>
-                            <a href="{{ baseUrl }}/{{ category.uri }}" >{{ category.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-        </div>
-        <!-- End row -->
-
-
-    </div> <!-- end container -->
-
-
-</section>
 
 {% endblock %}

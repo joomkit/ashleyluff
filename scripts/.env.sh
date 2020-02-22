@@ -30,7 +30,7 @@ GLOBAL_DB_DRIVER="mysql"
 # -- LOCAL settings --
 
 # Local path constants; paths should always have a trailing /
-LOCAL_ROOT_PATH="/Users/alansparkes/sites/ashleyluff/crafty/"
+LOCAL_ROOT_PATH="/Users/alansparkes/sites/ashleyluff/"
 LOCAL_ASSETS_PATH=${LOCAL_ROOT_PATH}"web/assets/"
 
 # Local user & group that should own the Craft CMS install
@@ -89,7 +89,7 @@ LOCAL_PSQL_CMD="psql"
 LOCAL_PG_DUMP_CMD="pg_dump"
 
 # Local backups path; paths should always have a trailing /
-LOCAL_BACKUPS_PATH="/Users/alansparkes/sites/ashleyluff/crafty/backups/"
+LOCAL_BACKUPS_PATH="/Users/alansparkes/sites/ashleyluff/backups/"
 
 # -- REMOTE settings --
 
