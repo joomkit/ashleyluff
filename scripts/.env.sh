@@ -100,7 +100,7 @@ REMOTE_SSH_PORT="22"
 #REMOTE_DB_USING_SSH="yes"
 # Remote path constants; paths should always have a trailing /
 
-REMOTE_ROOT_PATH="/home/ashleylu/staging.ashleyluff.com/web/"
+REMOTE_ROOT_PATH="/home/ashleylu/staging.ashleyluff.com/"
 REMOTE_ASSETS_PATH=${REMOTE_ROOT_PATH}"web/assets/"
 
 # Remote database constants; default port for mysql is 3306, default port for postgres is 5432

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e79f951c00e650341df412d75efa7f8",
+    "content-hash": "e90af59a434eb3230b5487bb0634c591",
     "packages": [
         {
             "name": "albertcht/invisible-recaptcha",
@@ -436,11 +436,11 @@
         },
         {
             "name": "craftcms/cms",
-            "version": "3.4.5",
+            "version": "3.4.7.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/cms/zipball/6ebc29ebbf3ee0b79527aef965b552212127f3c1",
-                "reference": "6ebc29ebbf3ee0b79527aef965b552212127f3c1",
+                "url": "https://api.github.com/repos/craftcms/cms/zipball/f4c55edfef8fd03ca3efd9e6fb197fc58eccd5aa",
+                "reference": "f4c55edfef8fd03ca3efd9e6fb197fc58eccd5aa",
                 "shasum": ""
             },
             "require": {
@@ -521,7 +521,7 @@
                 "docs": "https://docs.craftcms.com/v3/",
                 "rss": "https://github.com/craftcms/cms/releases.atom"
             },
-            "time": "2020-02-07T20:26:40+00:00"
+            "time": "2020-02-20T22:28:20+00:00"
         },
         {
             "name": "craftcms/contact-form",
@@ -759,7 +759,7 @@
             "version": "2.6.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craftcms/redactor/zipball/4329532750b3d6699fcbaad3c08eb7e8115e051d",
+                "url": "https://api.github.com/repos/craftcms/redactor/zipball/c8cc5b6bd6ac0258666744a4a530496da8d966c3",
                 "reference": "4329532750b3d6699fcbaad3c08eb7e8115e051d",
                 "shasum": ""
             },
