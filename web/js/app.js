@@ -39,7 +39,7 @@ $(document).ready(function() {
         $('a.scroll-down').on('click', function(event){
 
             event.preventDefault();
-            $('html,body').animate({scrollTop:$(this.hash).offset().top -75}, 1500);
+            $('html,body').animate({scrollTop:$(this.hash).offset().top -70}, 1500);
         });
 
     var $container = $('.portfolioContainer');
