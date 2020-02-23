@@ -1,29 +1,23 @@
 {% extends "_layouts/site.twig" %}
 {% import '_macros' as macros %}
 {% block content %}
-    {% set galleryItems = craft.entries({
-        section:'gallery',
-        with:['image']
-    }).ids()
-    %}
 
-    {% set categories = craft.categories.group('gallery').relatedTo(galleryItems) %}
-<section class="">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="page-title">
-                    <div class="row">
-                        <div class="col-lg-12 text-center mb-5">
-                            <h1>Gallery</h1>
+    <section class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title">
+                        <div class="row">
+                            <div class="col-lg-12 text-center mb-5">
+                                <h1>Gallery</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section class="section">
         <div class="container">
@@ -39,8 +33,7 @@
             {% set galleryItems = craft.entries({
                 section:'gallery',
                 with:['image']
-            }).ids()
-            %}
+            }).ids() %}
 
             {% set categories = craft.categories.group('gallery').relatedTo(galleryItems) %}
             <div class="row">
@@ -60,53 +53,53 @@
 
 
                     <div class="row">
+                        <div class="col-lg-7 text-center">
+                            <h3 class="mb-1">{{ category.title }}</h3>
+                            <p>{{ category.categoryDescription }}</p>
+                        </div>
                         <div class="col-xs-12 col-md-12 col-lg-7">
                             <div class="row">
-                                <div class="col-12 text-center">
-                                    <h3 class="mb-1">{{ category.title }}</h3>
-                                    <p>{{ category.categoryDescription }}</p>
-                                </div>
+
                             </div>
 
                             {% for entry in detailPic.all() %}
 
-                            {% if entry.sepiaFilter == '1' %}
+                                {% if entry.sepiaFilter == '1' %}
 
-                            {% set sepiaEffect = "modulate: [100, 20, 100]" |raw %}
+                                    {% set sepiaEffect = "{modulate: [100, 20, 100]}"  %}
                                 {% else %}
-                            {% set sepiaEffect = "" %}
-                            {% endif %}
+{#                                    {%  set entry.sepiaFilter = "modulate: [100, 100, 100]"  %}#}
+                                    {% set sepiaEffect = "{modulate: [100, 100, 100]}" %}
+                                {% endif %}
 
                                 {% set maxWidth = entry.maxWidth ?? "350" %}
 
-                                    {% set tags = entry.MediumUsed %}
+                                {% set tags = entry.MediumUsed %}
 
-                                    {% if  entry.featureContent == 1 %}
+                                {% if  entry.featureContent == 1 %}
 
-                                        {% set image = entry.detailedCrop[0] ?? null %}
-                                        {% set transformedImage = craft.imager.transformImage(image,
-                                            {
-                                                mode:'crop',
-                                                width:maxWidth,
-                                              position: image.getFocalPoint(),
+                                    {% set image = entry.detailedCrop[0] ?? null %}
+                                    {% set transformedImage = craft.imager.transformImage(image,
+                                        {mode:'crop',
+                                            width:maxWidth,
+                                            position: image.getFocalPoint(),
+                                            effects: [sepiaEffect]
+                                        }
+                                        )
+                                    %}
 
-                                            }
-                                            ) %}
+                                    <div class="d-flex justify-content-center">
 
-
-
-{#                                            {% set thumb = {#}
-{#                                                mode: 'crop',#}
-{#                                                width: 450,#}
-{#                                               height: 0,#}
-{#                                                quality: 85#}
-{#                                            } %}#}
-{#                                        { width: 600, height: 600, position: asset.getFocalPoint() }#}
-                                        <div class="d-flex justify-content-center">
-                                        <img class="img-fluid mb-3"  src="{{ transformedImage.url }}">
-                                        </div>
-{#                                            <img class="img-fluid"  src="{{ image.getUrl('detailLarge') }}" >#}
-                                    {% endif %}
+                                        <!-- An image that eventually gets lazy loaded by JavaScript -->
+                                        <img class="lazy img-fluid mb-3"
+                                             src="{{ baseUrl }}/images/placeholder300x200.jpg"
+                                             data-src="{{ transformedImage.url }}" alt="{{ image.title }}">
+                                        <!-- An image that is shown if JavaScript is turned off -->
+                                        <noscript>
+                                            <img class="img-fluid mb-3 lazy" src="{{ transformedImage.url }}">
+                                        </noscript>
+                                    </div>
+                                {% endif %}
 
                             {% endfor %}
 
@@ -114,72 +107,42 @@
                         <div class="col-xs-12 col-md-12 col-lg-5">
                             <div class="row portfolioContainer  m-b-30 ">
 
-                            {% for entry in gallery.all() %}
+                                {% for entry in gallery.all() %}
 
-                                {% set tags = entry.MediumUsed %}
-                                {% set image = entry.image[0] ?? null %}
-                                {% if image %}
-                                    {% set thumb = {
-                                        mode: 'crop',
-                                        width: 350,
-                                        height:350,
-                                        quality: 85
-                                    } %}
 
-                                    {% set tags = entry.MediumUsed %}
-                                    {#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
-                                    <div class="col-md-6 natural ">
-                                    {#<a href="work-detail.html">#}
-                                    <div class="portfolio-box mt-0 mb-4">
-                                    <div class="portfolio-box-img" data-src="{{ image.getUrl() }}">
-                                    {# Get the eager-loaded asset, if there is one #}
+                                    {% set image = entry.image[0] ?? null %}
+                                    {% if image %}
 
-                                    {#<img src="{{ image.url }}" class="img-fluid" alt="member-image">#}
-{#                                    <img class="img-fluid" alt="{{ entry.title }} - {% for tag in tags.all() %}{{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm" title="{{ entry.title }}"#}
-{#                                         src="{{ image.getUrl(thumb) }}">#}
-                                        <img class="img-fluid " src="{{ image.getUrl() }}" width="{{ image.getWidth() }}" height="{{ image.getHeight() }}">
 
-                                    </div>
-                                        <div class="portfolio-box-detail">
-                                            <h4>{{ entry.title }}</h4>
-                                            <div class="d-flex align-items-center">
+                                        {% set tags = entry.MediumUsed %}
+                                        {#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
+                                        {% set imgWidth = image.getWidth() %}
+                                        {% set imgHeight = image.getHeight() %}
+                                        <div class="col-md-6 natural ">
+                                            {#<a href="work-detail.html">#}
+                                            <div class="gallery {{ category.id }} mt-0 mb-4">
+                                                {%  set galthumb = image.getUrl('galleryThumb') %}
+                                                 <a rel={{ category.id }} href="{{ image.getUrl() }}" title="{{ entry.title }}: {% for tag in tags.all() %}medium(s) {{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm"">
+                                                     <img class="lazy img-fluid "
+                                                         src="{{ galthumb }}"
+                                                         data-original="{{ galthumb }}" alt="{{ image.title }} title="{{ image.title }}"
+                                                         width="{{ imgWidth }}"
+                                                         height="{{ imgHeight }}">
+                                                 </a>
 
-                                                <p class="align-self-center mdi mdi-24px mdi-palette"></p>
-                                                {% for tag in tags.all() %}
-                                                    <p class="px-1">{{ tag }}</p>
-                                                {% endfor %}
-                                                <p class="hide ml-3 justify-content-end mdi mdi-24px mdi-image-multiple mr-1"></p>
-                                                <p class="hide justify-content-end"> w: {{ entry.width }}cm  h: {{ entry.height }}cm</p>
                                             </div>
-
-
+                                            {#</a>#}
                                         </div>
-                                    </div>
-                                        {#</a>#}
-                                    </div>
-                                {% endif %}
+                                    {% endif %}
 
-                            {% endfor %}
+                                {% endfor %}
 
-                        </div>
+                            </div>
                         </div>
                     </div>
                     <hr>
 
                     {% endfor %}<!-- end cat loop -->
-                </div>
-                <div class="hide col-lg-4 pl-sm-0 pl-md-5 px-0 offset-1">
-                    <div class="galleryNav mt-3 sticky-top">
-                        <h3>Galleries</h3>
-                        <ul class="list-unstyled">
-
-                            {% for category in categories.all() %}
-                                <li>
-                                    <a {{ macros.isActive(category.slug) }} href="{{ baseUrl }}/{{ category.uri }}" >{{ category.title }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
                 </div>
 
             </div>
@@ -189,3 +152,14 @@
 
 
 {% endblock %}
+
+      {% js %}
+{#          var catid = {{ category.id }}#}
+          $('.gallery a').simpleLightbox({
+{#          captions: true,#}
+{#          captionType:'attr',#}
+          captionSelector: 'self',
+          captionPosition: 'bottom'
+
+          });
+      {% endjs %}

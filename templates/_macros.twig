@@ -1,6 +1,6 @@
 
 {% macro isActive(slug) %}
-    {% if slug in craft.request.firstSegment %} class="active" {% endif %}
+    {% if slug in craft.app.request.segments|first %} class="active" {% endif %}
     {% if slug in craft.app.request.segments %} class="active"{% endif %}
 {% endmacro %}
 
