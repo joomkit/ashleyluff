@@ -109,14 +109,17 @@
                                                 }
                                                 )
                                             %}
+                                            {% set imageSrc = entry.image[0].url %}
                                             {% set image = transformedImage.url %}
-                                                {% else %}
+
+                                            {% else %}
                                                 {% set image =  baseUrl ~ '/images/placeholder300x200.jpg' %}
+                                                {% set imageSrc =  baseUrl ~ '/images/placeholder300x200.jpg' %}
                                         {% endif %}
-                                        <div class="d-flex justify-content-center gallery {{ category.id }}">
+                                        <div class="d-flex justify-content-center  gallery {{ category.id }}">
 
                                             <!-- An image that eventually gets lazy loaded by JavaScript -->
-                                            <a rel={{ category.id }} href="{{ image }}"
+                                            <a class="launch-gallery" data-category="cat{{ category.id }}" href="{{ imageSrc }}"
                                                title="{{ entry.title }}{{medium}}{{size}} {{ entry.year }}">
                                             <img class="lazy img-fluid mb-3"
                                                  src="{{ baseUrl }}/images/placeholder300x200.jpg"
@@ -148,7 +151,7 @@
                                         {% set imgHeight = image.getHeight() %}
                                         <div class="col-md-6 natural ">
                                             {#<a href="work-detail.html">#}
-                                            <div class="gallery {{ category.id }} mt-0 mb-4">
+                                            <div class="gallery cat{{ category.id }} mt-0 mb-4">
                                                 {%  set galthumb = image.getUrl('galleryThumb') %}
                                                 {% set medium = '' %}
                                                 {% set size = '' %}
@@ -167,7 +170,7 @@
                                                     {% endif %}
                                                 {% endif %}
 
-                                                 <a rel={{ category.id }} href="{{ image.getUrl() }}"
+                                                 <a rel="{{ category.id }}" href="{{ image.getUrl() }}"
                                                     title="{{ entry.title }}{{medium}}{{size}} {{ entry.year }}">
                                                      <img class="lazy img-fluid "
                                                          src="{{ galthumb }}"
@@ -201,11 +204,25 @@
 
       {% js %}
           {#          var catid = {{ category.id }}#}
-          $('.gallery a').simpleLightbox({
+          var lightbox = $('.gallery a').simpleLightbox({
           {#          captions: true,#}
           {#          captionType:'attr',#}
           captionSelector: 'self',
           captionPosition: 'bottom'
 
           });
+
       {% endjs %}
+ {% js %}
+
+{#     var lightbox2= $('.gallery a').simpleLightbox();#}
+
+{#     $('.launch-gallery').click(function(e){#}
+{#         e.preventDefault();#}
+{#         var catTarget = $(this).attr('data-category');#}
+{#         console.log(catTarget);#}
+{#         lightbox2.show($('.gallery.'+catTarget+' a:first'));#}
+{#     });#}
+
+
+ {% endjs %}
