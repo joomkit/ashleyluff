@@ -66,10 +66,10 @@
 
                                 {% if entry.sepiaFilter == '1' %}
 
-                                    {% set sepiaEffect = "{modulate: [100, 20, 100]}"  %}
+                                    {% set sepiaEffect = {modulate: [100, 20, 100]}  %}
                                 {% else %}
 {#                                    {%  set entry.sepiaFilter = "modulate: [100, 100, 100]"  %}#}
-                                    {% set sepiaEffect = "{modulate: [100, 100, 100]}" %}
+                                    {% set sepiaEffect = {modulate: [100, 100, 100]} %}
                                 {% endif %}
 
                                 {% set maxWidth = entry.maxWidth ?? "350" %}
@@ -77,26 +77,32 @@
                                 {% set tags = entry.MediumUsed %}
 
                                 {% if  entry.featureContent == 1 %}
-
+{#                                    {% set seffect = {modulate: [100, 20, 100]}  %}#}
                                     {% set image = entry.detailedCrop[0] ?? null %}
-                                    {% set transformedImage = craft.imager.transformImage(image,
-                                        {mode:'crop',
-                                            width:maxWidth,
-                                            position: image.getFocalPoint(),
-                                            effects: [sepiaEffect]
-                                        }
-                                        )
-                                    %}
-
+                                    {% if image  %}
+                                        {% set transformedImage = craft.imager.transformImage(image,
+                                            {
+                                                mode:'crop',
+                                                width: maxWidth,
+                                                position: image.getFocalPoint(),
+                                                effects: sepiaEffect
+                                            }
+                                         )%}
+                                        {% set newImage = transformedImage.url %}
+{#                                        {% set imageTitle = image.title %}#}
+                                    {% else %}
+                                        {% set newImage = baseUrl ~ '/images/placeholder300x200.jpg' %}
+{#                                        {% set imageTitle = %}#}
+                                        {% endif %}
                                     <div class="d-flex justify-content-center">
 
                                         <!-- An image that eventually gets lazy loaded by JavaScript -->
                                         <img class="lazy img-fluid mb-3"
                                              src="{{ baseUrl }}/images/placeholder300x200.jpg"
-                                             data-src="{{ transformedImage.url }}" alt="{{ image.title }}">
+                                             data-src="{{ newImage }}" alt="{{ image.title |default(entry.title) }}">
                                         <!-- An image that is shown if JavaScript is turned off -->
                                         <noscript>
-                                            <img class="img-fluid mb-3 lazy" src="{{ transformedImage.url }}">
+                                            <img class="img-fluid mb-3 lazy" src="{{ newImage }}">
                                         </noscript>
                                     </div>
                                 {% endif %}
@@ -122,7 +128,30 @@
                                             {#<a href="work-detail.html">#}
                                             <div class="gallery {{ category.id }} mt-0 mb-4">
                                                 {%  set galthumb = image.getUrl('galleryThumb') %}
-                                                 <a rel={{ category.id }} href="{{ image.getUrl() }}" title="{{ entry.title }}: {% for tag in tags.all() %}medium(s) {{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm"">
+                                                {% set medium = '' %}
+                                                {% set size = '' %}
+                                                {% set medium = '' %}
+
+                                                {# if size info then we show size and medium otherwise no medium ???? #}
+                                                {%  if entry.width > '0' %}
+                                                    {% set size = entry.height ~'.'~entry.width~'cm' %}
+                                                    {%  if tags | length %}
+                                                        {% for tag in tags.all() %}
+                                                            {% set medium =  tag ~ ','  %}
+                                                            {%  if loop.last %}
+                                                                {% set medium = '.'~tag ~ '.' %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endif %}
+
+
+
+
+
+
+                                                 <a rel={{ category.id }} href="{{ image.getUrl() }}"
+                                                    title="{{ entry.title }}{{medium}}{{size}}">
                                                      <img class="lazy img-fluid "
                                                          src="{{ galthumb }}"
                                                          data-original="{{ galthumb }}" alt="{{ image.title }} title="{{ image.title }}"
@@ -159,7 +188,8 @@
 {#          captions: true,#}
 {#          captionType:'attr',#}
           captionSelector: 'self',
-          captionPosition: 'bottom'
+          captionPosition: 'bottom',
+          animationSlide: 'true'
 
           });
       {% endjs %}

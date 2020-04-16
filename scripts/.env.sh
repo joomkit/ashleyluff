@@ -31,7 +31,7 @@ GLOBAL_DB_DRIVER="mysql"
 
 # Local path constants; paths should always have a trailing /
 LOCAL_ROOT_PATH="/Users/alansparkes/sites/ashleyluff/"
-LOCAL_ASSETS_PATH=${LOCAL_ROOT_PATH}"web/assets/"
+LOCAL_ASSETS_PATH=${LOCAL_ROOT_PATH}"public_html/assets/"
 
 # Local user & group that should own the Craft CMS install
 LOCAL_CHOWN_USER="alansparkes"
@@ -100,8 +100,8 @@ REMOTE_SSH_PORT="22"
 #REMOTE_DB_USING_SSH="yes"
 # Remote path constants; paths should always have a trailing /
 
-REMOTE_ROOT_PATH="/home/ashleylu/staging.ashleyluff.com/"
-REMOTE_ASSETS_PATH=${REMOTE_ROOT_PATH}"web/assets/"
+REMOTE_ROOT_PATH="/home/ashleylu/"
+REMOTE_ASSETS_PATH=${REMOTE_ROOT_PATH}"public_html/assets/"
 
 # Remote database constants; default port for mysql is 3306, default port for postgres is 5432
 REMOTE_DB_NAME="ashleylu_craft"
@@ -125,7 +125,7 @@ REMOTE_PSQL_CMD="psql"
 REMOTE_PG_DUMP_CMD="pg_dump"
 
 # Remote backups path; paths should always have a trailing /
-REMOTE_BACKUPS_PATH="/ashleylu/staging.ashleyluff.com/backups/"
+REMOTE_BACKUPS_PATH="/home/ashleylu/backups/"
 
 # Remote Amazon S3 bucket name
 REMOTE_S3_BUCKET=""
