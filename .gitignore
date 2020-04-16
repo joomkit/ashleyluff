@@ -9,4 +9,6 @@
 /sql
 .DS_Store
 config/project.yaml
-
+/web/assets/
+/web/assets/images/_*
+/public_html/assets/images/

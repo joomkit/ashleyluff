@@ -1,0 +1,2 @@
+$(window).on("load",(function(){}));var $container=$(".portfolioContainer");$container.isotope({filter:"*",animationOptions:{duration:750,easing:"linear",queue:!1}}),$(".portfolioFilter a").click((function(){$(".portfolioFilter .current").removeClass("current"),$(this).addClass("current");var t=$(this).attr("data-filter"),i=$(this).attr("data-cat-desc"),a=$(this).attr("data-cat-title");return $(".catDesc").html(a+i).fadeIn(1e3),$container.isotope({filter:t,animationOptions:{duration:750,easing:"linear",queue:!1}}),!1}));
+//# sourceMappingURL=dist-min.js.map

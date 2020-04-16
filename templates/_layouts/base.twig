@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% hook "seo" %}
 
-        <link rel="shortcut icon" href="{{ baseUrl }}/images/favicon.ico">
+        <link rel="shortcut icon" href="{{ baseUrl }}/favicon.ico">
 
         <!-- Google Font -->
         <style>
@@ -22,20 +22,21 @@
         <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/pe-icon-7-stroke.css" />
 
         <!-- Custom Css -->
-        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/style.css" />
-
-
-        <!-- timeline Css -->
+        <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/style-min.css" />
         <link rel="stylesheet" type="text/css" href="{{ baseUrl }}/css/timeline.css" />
 
-        <link type="text/css" rel="stylesheet" href="{{ baseUrl }}/css/lightgallery.css" />
 
 
+
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ baseUrl }}/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ baseUrl }}/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ baseUrl }}/favicon-16x16.png">
+        <link rel="manifest" href="{{ baseUrl }}/site.webmanifest">
     </head>
 {% endblock %}
 
 {% if bodyClass is not defined %}
-    {% set bodyClass = entry is defined ? entry.type : craft.request.firstSegment %}
+    {% set bodyClass = entry is defined ? entry.type : craft.app.request.segments|first %}
 {% endif %}
 <body class="{{ bodyClass }}">
 {% include '_includes/nav.twig' %}

@@ -67,13 +67,12 @@
 
                     <form method="post" action="" accept-charset="UTF-8">
                         {{ csrfInput() }}
+                        <input type="hidden" name="postDate" value="{{ now|date("Y-m-j H:i:s") }}" />
+
                         <input type="hidden" name="action" value="guest-entries/save">
+                        <input type="hidden" name="fields[ipAddress]" value="{{ craft.request.getIpAddress() }}">
                         <input type="hidden" name="sectionUid" value="fa37ebf7-8df6-4338-91b4-8f6d05a75c2c">
                         {{ redirectInput('contact/thanks') }}
-
-
-
-
 
                         <div class="row">
                             <div class="col-lg-6">
@@ -89,7 +88,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Your Email" id="from-email" type="email" name="fromEmail" required>
+                                    <input class="form-control" placeholder="Your Email" id="from-email" type="email" name="fields[fromemail]" required>
 
 
                                 </div>
