@@ -64,26 +64,6 @@
 
                                 {% for entry in detailPic.all() %}
 
-                                    {% set tags = entry.MediumUsed %}
-                                    {#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
-
-                                    {% set medium = '' %}
-                                    {% set size = '' %}
-                                    {% set medium = '' %}
-
-                                    {# if size info then we show size and medium otherwise no medium ???? #}
-                                    {%  if entry.width > '0' %}
-                                        {% set size = entry.height ~'.'~entry.width~'cm' %}
-                                        {%  if tags | length %}
-                                            {% for tag in tags.all() %}
-                                                {% set medium =  tag ~ ','  %}
-                                                {%  if loop.last %}
-                                                    {% set medium = '.'~tag ~ '.' %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% endif %}
-
                                     {% if entry.sepiaFilter == '1' %}
 
                                         {% set sepiaEffect = "{modulate: [100, 20, 100]}"  %}
@@ -113,15 +93,12 @@
                                                 {% else %}
                                                 {% set image =  baseUrl ~ '/images/placeholder300x200.jpg' %}
                                         {% endif %}
-                                        <div class="d-flex justify-content-center gallery {{ category.id }}">
+                                        <div class="d-flex justify-content-center">
 
                                             <!-- An image that eventually gets lazy loaded by JavaScript -->
-                                            <a rel={{ category.id }} href="{{ image }}"
-                                               title="{{ entry.title }}{{medium}}{{size}} {{ entry.year }}">
                                             <img class="lazy img-fluid mb-3"
                                                  src="{{ baseUrl }}/images/placeholder300x200.jpg"
                                                  data-src="{{ image }}" alt="{{ image.title | default(entry.title) }}">
-                                            </a>
                                             <!-- An image that is shown if JavaScript is turned off -->
                                             <noscript>
                                                 <img class="img-fluid mb-3 lazy" src="{{ image }}">
@@ -135,51 +112,33 @@
                             <div class="col-xs-12 col-md-12 col-lg-5">
                                 <div class="row portfolioContainer  m-b-30 ">
 
-                                {% for entry in gallery.all() %}
+                                    {% for entry in gallery.all() %}
 
 
-                                    {% set image = entry.image[0] ?? null %}
-                                    {% if image %}
+                                        {% set image = entry.image[0] ?? null %}
+                                        {% if image %}
 
 
-                                        {% set tags = entry.MediumUsed %}
-                                        {#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
-                                        {% set imgWidth = image.getWidth() %}
-                                        {% set imgHeight = image.getHeight() %}
-                                        <div class="col-md-6 natural ">
-                                            {#<a href="work-detail.html">#}
-                                            <div class="gallery {{ category.id }} mt-0 mb-4">
-                                                {%  set galthumb = image.getUrl('galleryThumb') %}
-                                                {% set medium = '' %}
-                                                {% set size = '' %}
-                                                {% set medium = '' %}
-
-                                                {# if size info then we show size and medium otherwise no medium ???? #}
-                                                {%  if entry.width > '0' %}
-                                                    {% set size = entry.height ~'.'~entry.width~'cm' %}
-                                                    {%  if tags | length %}
-                                                        {% for tag in tags.all() %}
-                                                            {% set medium =  tag ~ ','  %}
-                                                            {%  if loop.last %}
-                                                                {% set medium = '.'~tag ~ '.' %}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                {% endif %}
-
-                                                 <a rel={{ category.id }} href="{{ image.getUrl() }}"
-                                                    title="{{ entry.title }}{{medium}}{{size}} {{ entry.year }}">
-                                                     <img class="lazy img-fluid "
+                                            {% set tags = entry.MediumUsed %}
+                                            {#                        {% set cat = entry.category.one().slug ? entry.category.one().slug : '' %}#}
+                                            {% set imgWidth = image.getWidth() %}
+                                            {% set imgHeight = image.getHeight() %}
+                                            <div class="col-md-6 natural ">
+                                                {#<a href="work-detail.html">#}
+                                                <div class="gallery {{ category.id }} mt-0 mb-4">
+                                                    {%  set galthumb = image.getUrl('galleryThumb') %}
+                                                    <a rel={{ category.id }} href="{{ image.getUrl() }}" title="{{ entry.title }}: {% for tag in tags.all() %}medium(s) {{ tag }}{% endfor %} - width: {{ entry.width }}cm, height: {{ entry.height }}cm">
+                                                    <img class="lazy img-fluid "
                                                          src="{{ galthumb }}"
                                                          data-original="{{ galthumb }}" alt="{{ image.title }} title="{{ image.title }}"
-                                                         width="{{ imgWidth }}"
-                                                         height="{{ imgHeight }}">
-                                                 </a>
+                                                    width="{{ imgWidth }}"
+                                                    height="{{ imgHeight }}">
+                                                    </a>
 
+                                                </div>
+                                                {#</a>#}
                                             </div>
-                                            {#</a>#}
-                                        </div>
-                                    {% endif %}
+                                        {% endif %}
 
                                     {% endfor %}
 

@@ -12,3 +12,4 @@ config/project.yaml
 /web/assets/
 /web/assets/images/_*
 /public_html/assets/images/
+/public_html/assets/
