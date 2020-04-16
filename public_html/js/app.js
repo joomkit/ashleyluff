@@ -36,11 +36,11 @@ $(document).ready(function() {
 
 
 //Smooth scrolling with links
-        $('a.scroll-down').on('click', function(event){
+    $('a.scroll-down').on('click', function(event){
 
-            event.preventDefault();
-            $('html,body').animate({scrollTop:$(this.hash).offset().top -70}, 1500);
-        });
+        event.preventDefault();
+        $('html,body').animate({scrollTop:$(this.hash).offset().top -75}, 1500);
+    });
 
     var $container = $('.portfolioContainer');
 
